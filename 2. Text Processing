@@ -1,0 +1,34 @@
+import fitz  # PyMuPDF for PDF extraction
+import re  # Regular expressions for text processing
+
+# Define the PDF file path
+pdf_path = "example.pdf"
+
+def extract_text_from_pdf(pdf_path):
+    text = ""
+    doc = fitz.open(pdf_path)
+    for page in doc:
+        text += page.get_text("text")
+    doc.close()
+    return text
+
+def preprocess_text(text):
+    # Remove extra spaces, newlines, and tabs
+    text = re.sub(r'\s+', ' ', text).strip()
+    
+    # Remove non-breaking spaces
+    text = text.replace('\xa0', ' ')
+    
+    # Add a newline after full stops to improve sentence splitting
+    text = text.replace('.', '.\n')
+    
+    return text
+
+# Extract text from the PDF
+extracted_text = extract_text_from_pdf(pdf_path)
+
+# Preprocess the extracted text
+preprocessed_text = preprocess_text(extracted_text)
+
+# Print the preprocessed text
+print(preprocessed_text)
