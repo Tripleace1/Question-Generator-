@@ -1,0 +1,18 @@
+import fitz  # PyMuPDF for PDF extraction
+
+# Define the PDF file path
+pdf_path = "example.pdf"
+
+def extract_text_from_pdf(pdf_path):
+    text = ""  # Initialize an empty string to store the extracted text
+    doc = fitz.open(pdf_path)  # Open the PDF document using PyMuPDF
+    for page in doc:
+        text += page.get_text("text")  # Extract text from each page and add to the text string
+    doc.close()  # Close the PDF document
+    return text
+
+# Extract text from the PDF
+extracted_text = extract_text_from_pdf(pdf_path)
+
+# Print the extracted text
+print(extracted_text)
